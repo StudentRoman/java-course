@@ -14,11 +14,16 @@ public class EratosthenesSieve {
             System.err.println("Wrong input format");
             return;
         }
-        
+
         int arrayLength = Integer.parseInt(userInput);
         boolean[] result = getEratosthenesSieve(arrayLength);
-
-        System.out.println(Arrays.toString(result));
+        
+        System.out.printf("List of prime numbers from 2 to %d \n", arrayLength);
+        for (int i = 2; i < result.length; i++) {
+            if (result[i]) {
+                System.out.println(i);
+            }
+        }
 
         scanner.close();
     }
@@ -31,7 +36,7 @@ public class EratosthenesSieve {
 
         for (int i = 2; i * i <= sieveSize; i++) {
             if (sieve[i]) {
-                for (int j = i * i; j < sieveSize; j += i) {
+                for (int j = i * i; j <= sieveSize; j += i) {
                     sieve[j] = false;
                 }
             }

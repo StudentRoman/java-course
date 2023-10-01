@@ -55,7 +55,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>edu.penzgtu.oop.MergeSort</mainClass>
+                                <mainClass>edu.penzgtu.oop.Main</mainClass>
                             </manifest>
                         </archive>
                     </configuration>

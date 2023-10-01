@@ -11,17 +11,33 @@ class HeronTest {
     void testHeronSqrt() {
         Heron heron = new Heron();
 
-        assertEquals(1.7320508075688772, heron.heronSqrt(3));
-        assertEquals(2.23606797749979, heron.heronSqrt(5));
-        assertEquals(4, heron.heronSqrt(16));
-        assertEquals(10, heron.heronSqrt(100));
+        double current = 16;
+        double expected = Math.sqrt(current);
+
+        assertEquals(expected, heron.heronSqrt(16));
     }
 
     @Test
-    @DisplayName("Should correctly process a negative number")
+    @DisplayName("Should calculating the square root of a number that is not a perfect square correctly")
+    void testHeronSqrtNotPerfectSquare() {
+        Heron heron = new Heron();
+
+        double current = 3;
+        double expected = Math.sqrt(current);
+
+        assertEquals(expected, heron.heronSqrt(3));
+    }
+
+    @Test
+    @DisplayName("Should correctly process a special cases")
     void testHeronSqrtNegativeNumber() {
         Heron heron = new Heron();
 
-        assertEquals(-1, heron.heronSqrt(-3));
+        assertEquals(Math.sqrt(0), heron.heronSqrt(0));
+        assertEquals(Math.sqrt(-0), heron.heronSqrt(-0));
+        assertEquals(Math.sqrt(-4), heron.heronSqrt(-4));
+        assertEquals(Math.sqrt(Double.POSITIVE_INFINITY), heron.heronSqrt(Double.POSITIVE_INFINITY));
+        assertEquals(Math.sqrt(Double.NEGATIVE_INFINITY), heron.heronSqrt(Double.NEGATIVE_INFINITY));
+        assertEquals(Math.sqrt(Double.NaN), heron.heronSqrt(Double.NaN));
     }
 }

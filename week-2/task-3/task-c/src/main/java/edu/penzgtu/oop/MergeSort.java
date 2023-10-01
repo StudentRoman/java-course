@@ -2,7 +2,6 @@ package edu.penzgtu.oop;
 
 public class MergeSort {
 
-
     private static void merge(int[] a, int[] leftArray, int[] rightArray, int left, int right) {
         int i = 0;
         int j = 0;

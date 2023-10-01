@@ -1,8 +1,9 @@
 package edu.penzgtu.oop;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class NumbersMedian {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -19,28 +20,17 @@ public class NumbersMedian {
         System.out.println("Insert array elements:");
         int[] items = fillArray(arrayLength);
 
-        if (items != null) {
-            MergeSort mergeSort = new MergeSort();
-            mergeSort.sortArray(items);
+        MergeSort mergeSort = new MergeSort();
 
-            double median = getArrayMedian(items);
-            System.out.println(median);
+        if (items != null) {
+            System.out.printf("Array before sorting - %s \n", Arrays.toString(items));
+            mergeSort.sortArray(items);
+            System.out.printf("Array after sorting - %s", Arrays.toString(items));
         } else {
             System.err.println("Wrong input format");
         }
 
         scanner.close();
-    }
-
-    public static double getArrayMedian(int[] numbers) {
-        int arrayLength = numbers.length;
-        int median = arrayLength / 2;
-
-        if (arrayLength % 2 == 0) {
-            return (numbers[median] + numbers[median - 1]) / 2.0;
-        } else {
-            return numbers[median];
-        }
     }
 
     private static int[] fillArray(int arrayLength) {

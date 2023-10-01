@@ -18,7 +18,7 @@ public class Heron {
         double result = heronSqrt(number);
 
         if (result != -1) {
-            System.out.printf("Result = %s", result);
+            System.out.printf("Result = %s \n", result);
         } else {
             System.out.println("Entered a number less than zero");
         }
@@ -26,9 +26,13 @@ public class Heron {
         scanner.close();
     }
 
-    public static double heronSqrt(int number) {
+    public static double heronSqrt(double number) {
         if (number < 0) {
-            return -1;
+            return Double.NaN;
+        }
+
+        if (number == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
         }
 
         double result = number;

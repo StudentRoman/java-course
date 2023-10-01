@@ -18,7 +18,7 @@ public class MaxCountNumber {
         int arrayLength = Integer.parseInt(userInput);
 
         System.out.println("Insert array elements:");
-        int[] items = insertingElements(arrayLength);
+        int[] items = fillArray(arrayLength);
 
         if (items != null) {
             int result = getCountMaxNumber(items);
@@ -47,7 +47,7 @@ public class MaxCountNumber {
         return count;
     }
 
-    private static int[] insertingElements(int arrayLength) {
+    private static int[] fillArray(int arrayLength) {
         int[] array = new int[arrayLength];
         Scanner scanner = new Scanner(System.in);
 
