@@ -15,28 +15,18 @@ public class ShannonEntropy {
     }
 
     public static double calculateEntropy(String str) {
-        char[] chars = str.toCharArray();
         double[] charCounts = new double[256];
 
-        for (char element : chars) {
-            charCounts[element]++;
-        }
-
-        double totalCount = 0.0;
-
-        for (double element : charCounts) {
-            totalCount += element;
-        }
-
-        for (int i = 0; i < charCounts.length; i++) {
-            charCounts[i] = charCounts[i] / totalCount;
+        for (int i = 0; i < str.length(); i++) {
+            charCounts[str.charAt(i)]++;
         }
 
         double entropy = 0;
 
-        for (double element : charCounts) {
-            if (element > 0) {
-                entropy -= element * (Math.log(element) / Math.log(2));
+        for (int i = 0; i < charCounts.length; i++) {
+            if (charCounts[i] > 0) {
+                double element = charCounts[i] / str.length();
+                entropy -= element * Math.log(element) / Math.log(2);
             }
         }
 

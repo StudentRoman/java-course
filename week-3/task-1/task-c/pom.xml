@@ -55,7 +55,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>edu.penzgtu.oop.Sensor</mainClass>
+                                <mainClass>edu.penzgtu.oop.Application</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
