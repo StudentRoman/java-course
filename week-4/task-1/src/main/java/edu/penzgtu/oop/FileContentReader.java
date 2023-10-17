@@ -1,17 +1,21 @@
 package edu.penzgtu.oop;
 
+import java.util.Scanner;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class FileContentReader {
     public static void main(String[] args) {
-        String filename = "text.txt";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите название файла: ");
+        String userInput = scanner.nextLine();
 
         try {
-            String content = fileRead(filename);
+            String content = readFile(userInput);
 
-            System.out.printf("Содержимое файла %s: \n", filename);
+            System.out.printf("Содержимое файла %s: \n", userInput);
             System.out.println(content);
         } catch (FileNotFoundException error) {
             System.err.println("Файл не найден.");
@@ -22,7 +26,7 @@ public class FileContentReader {
         }
     }
 
-    public static String fileRead(String filename) throws IOException {
+    public static String readFile(String filename) throws IOException {
         FileReader fileReader = new FileReader(filename);
         char[] chars = new char[1024];
         fileReader.read(chars);

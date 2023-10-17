@@ -1,13 +1,18 @@
 package edu.penzgtu.oop;
 
-class Sensor {
-    double id;
-    double temp;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-    public Sensor(double id, double temp) {
-        this.id = id;
-        this.temp = temp;
-    }
+@AllArgsConstructor
+class Sensor {
+    @Getter
+    @Setter
+    private double id;
+
+    @Getter
+    @Setter
+    private double temp;
 
     @Override
     public String toString() {
