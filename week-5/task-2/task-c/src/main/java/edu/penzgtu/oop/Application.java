@@ -1,26 +1,26 @@
 package edu.penzgtu.oop;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class Application {
-    public static final int ITERATIONS = 40;
+    public static final int NUMBER = 40;
 
     public static void main(String[] args) {
-        Fibonacci fibonacci = new Fibonacci();
+        FibonacciClassic fibonacciClassic = new FibonacciClassic();
+        Instant startClassicFibonacci = Instant.now();
 
-        long timeFibonacci = System.currentTimeMillis();
+        fibonacciClassic.calculate(NUMBER);
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            fibonacci.fibonacciClassic(i);
-        }
+        long timeClassicFibonacci = Duration.between(startClassicFibonacci, Instant.now()).toNanos();
+        System.out.printf("Классическая реализация: %s%n", timeClassicFibonacci);
 
-        System.out.print("Классическая реализация: ");
-        System.out.println(System.currentTimeMillis() - timeFibonacci);
+        FibonacciCache fibonacciCache = new FibonacciCache();
+        Instant startCachedFibonacci = Instant.now();
 
-        long timeFibonacciCached = System.currentTimeMillis();
-        for (int i = 0; i < ITERATIONS; i++) {
-            Fibonacci.fibonacciWithMemoization(i);
-        }
+        fibonacciCache.calculate(NUMBER);
 
-        System.out.print("Реализация с помощью кэша: ");
-        System.out.println(System.currentTimeMillis() - timeFibonacciCached);
+        long timeCachedFibonacci = Duration.between(startCachedFibonacci, Instant.now()).toNanos();
+        System.out.printf("Реализация с помощью кэша: %s%n", timeCachedFibonacci);
     }
 }

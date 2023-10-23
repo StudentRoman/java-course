@@ -21,7 +21,7 @@ public class Profit {
 
     private static int maxProfit(List<Integer> prices) {
         int result = 0;
-        int buy = 1000000;
+        int buy = Integer.MAX_VALUE;
 
         for (int price : prices) {
             buy = Math.min(buy, price);

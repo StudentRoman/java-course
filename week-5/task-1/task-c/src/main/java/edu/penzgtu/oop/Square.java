@@ -11,20 +11,31 @@ public class Square {
 
         List<Integer> data = stringToNumArray(userInput.split(","));
 
-        System.out.printf("Результат %n%d", maxContainerSquare(data));
+        System.out.printf("Результат %n%d", maxContainerArea(data));
     }
 
-    private static long maxContainerSquare(List<Integer> coordinates) {
-        int result = 0;
+    private static long maxContainerArea(List<Integer> coordinates) {
+        int left = 0;
+        int right = coordinates.size() - 1;
+        int max = 0;
 
-        for (int i = 0; i < coordinates.size() - 1; i++) {
-            for (int j = i + 1; j < coordinates.size(); j++) {
-                int area = Math.min(coordinates.get(i), coordinates.get(j)) * (j - i);
-                result = Math.max(result, area);
+        while (left < right) {
+            int width = right - left;
+            int height = Math.min(coordinates.get(left), coordinates.get(right));
+            int area = height * width;
+            max = Math.max(max, area);
+
+            if (coordinates.get(left) < coordinates.get(right)) {
+                left++;
+            } else if (coordinates.get(left) > coordinates.get(right)) {
+                right--;
+            } else {
+                left++;
+                right--;
             }
         }
 
-        return result;
+        return max;
     }
 
     private static List<Integer> stringToNumArray(String[] strArrayList) {
