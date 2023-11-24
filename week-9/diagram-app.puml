@@ -1,0 +1,81 @@
+@startuml
+class Catalog {
+- ArrayList<Book> books
+}
+class Cart {
+- ArrayList<CustomerCart> cart
+}
+class Customer {
+- int id
+- String name
+}
+class CatalogParser {
+- {static} String dataPath
++ {static} ArrayList<Book> parse()
+}
+class CatalogRepository {
++ <<Create>> CatalogRepository()
++ ArrayList<Book> findAll()
++ Book findById(int)
+}
+class CatalogService {
+- CatalogRepository catalogRepository
++ ArrayList<Book> findAll()
++ Book findById(int)
+}
+class CartParser {
+- {static} String dataPath
++ {static} ArrayList<CustomerCart> parse()
++ {static} void create(CartRepository)
+}
+class CartRepository {
++ <<Create>> CartRepository()
++ ArrayList<CustomerCart> findAll()
++ CustomerCart findByName(String)
++ void insertOne(Customer)
++ void updateOne(String,Book)
++ void deleteOne(String,Book)
+}
+class CartService {
+- CartRepository cartRepository
+- boolean findBookInList(int,ArrayList<Book>)
++ ArrayList<CustomerCart> findAll()
++ CustomerCart findByName(String)
++ void createCart(Customer)
++ void addItem(String,Book)
++ void deleteItem(String,Book)
+}
+class Application {
+- {static} CatalogService catalogService
+- {static} CartService cartService
+- {static} Customer currentCustomer
++ {static} void main(String[])
+- {static} void initCustomer(String)
+- {static} void mainChoiceMenu()
+- {static} void catalogChoiceMenu()
+- {static} void cartChoiceMenu()
+- {static} void addProductToCart()
+- {static} void getTotalPrice()
+- {static} void deleteProductFromCart()
+- {static} void showCartTable()
+- {static} void showCatalogTable()
+- {static} void generateBookTable(ArrayList<Book>)
+- {static} int getUserChoiceInput()
+- {static} void showMainMenu()
+- {static} void showCatalogMenu()
+- {static} void showCartMenu()
+}
+
+Cart <|-- CartRepository
+Catalog <|-- CatalogRepository
+
+CatalogParser --* CatalogRepository
+CatalogService *-- CatalogRepository
+
+CartParser --* CartRepository
+CartService *-- CartRepository
+
+Application *-- CatalogService
+Application *-- CartService
+Application *-- Customer
+@enduml
