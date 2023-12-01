@@ -1,15 +1,20 @@
 package edu.penzgtu.oop.repositories;
 
+import edu.penzgtu.oop.dataparsers.JSONDataParser;
 import edu.penzgtu.oop.models.Book;
 import edu.penzgtu.oop.models.Catalog;
-import edu.penzgtu.oop.parsers.CatalogParser;
+import edu.penzgtu.oop.utils.ConfigUtil;
 
 import java.util.ArrayList;
 
 public class CatalogRepository extends Catalog {
+    private static final JSONDataParser<Catalog> catalogParser = new JSONDataParser<>(
+            ConfigUtil.getConfig().getProperty("catalogDataPath"),
+            Catalog.class
+    );
 
     public CatalogRepository() {
-        super(CatalogParser.parse());
+        super(catalogParser.parse().getBooks());
     }
 
     public ArrayList<Book> findAll() {

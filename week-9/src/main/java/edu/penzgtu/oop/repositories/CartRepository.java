@@ -1,18 +1,23 @@
 package edu.penzgtu.oop.repositories;
 
+import edu.penzgtu.oop.dataparsers.JSONDataParser;
 import edu.penzgtu.oop.models.Book;
 import edu.penzgtu.oop.models.Cart;
 import edu.penzgtu.oop.models.Customer;
 import edu.penzgtu.oop.models.CustomerCart;
-import edu.penzgtu.oop.parsers.CartParser;
+import edu.penzgtu.oop.utils.ConfigUtil;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class CartRepository extends Cart {
+    private static final JSONDataParser<Cart> cartParser = new JSONDataParser<>(
+            ConfigUtil.getConfig().getProperty("cartDataPath"),
+            Cart.class
+    );
 
     public CartRepository() {
-        super(CartParser.parse());
+        super(cartParser.parse().getCart());
     }
 
     public ArrayList<CustomerCart> findAll() {
@@ -32,7 +37,7 @@ public class CartRepository extends Cart {
         CustomerCart customerCart = new CustomerCart(new ArrayList<>(), 0.0, customer);
 
         this.getCart().add(customerCart);
-        CartParser.create(this);
+        cartParser.create(this);
     }
 
     public void updateOne(String customerName, Book book) {
@@ -41,7 +46,7 @@ public class CartRepository extends Cart {
                 .filter(item -> Objects.equals(item.getCustomer().getName(), customerName))
                 .findFirst()
                 .ifPresent(customerCart -> customerCart.addItem(book));
-        CartParser.create(this);
+        cartParser.create(this);
     }
 
     public void deleteOne(String customerName, Book book) {
@@ -50,6 +55,6 @@ public class CartRepository extends Cart {
                 .filter(item -> Objects.equals(item.getCustomer().getName(), customerName))
                 .findFirst()
                 .ifPresent(customerCart -> customerCart.deleteItem(book));
-        CartParser.create(this);
+        cartParser.create(this);
     }
 }

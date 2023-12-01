@@ -1,17 +1,36 @@
 @startuml
 class Catalog {
 - ArrayList<Book> books
++ <<Create>> Catalog(ArrayList<Book>)
++ ArrayList<Book> getBooks()
++ void setBooks(ArrayList<Book>)
++ String toString()
 }
 class Cart {
 - ArrayList<CustomerCart> cart
++ <<Create>> Cart(ArrayList<CustomerCart>)
++ ArrayList<CustomerCart> getCart()
++ void setCart(ArrayList<CustomerCart>)
 }
 class Customer {
 - int id
 - String name
++ <<Create>> Customer(int,String)
++ int getId()
++ String getName()
++ void setId(int)
++ void setName(String)
 }
-class CatalogParser {
-- {static} String dataPath
-+ {static} ArrayList<Book> parse()
+class Config {
+- {static} Properties config
++ {static} void setConfig(String)
+}
+class JSONDataParser {
+- String dataPath
+- Class<T> model
++ <<Create>> JSONDataParser(String,Class<T>)
++ T parse()
++ void create(K)
 }
 class CatalogRepository {
 + <<Create>> CatalogRepository()
@@ -22,11 +41,6 @@ class CatalogService {
 - CatalogRepository catalogRepository
 + ArrayList<Book> findAll()
 + Book findById(int)
-}
-class CartParser {
-- {static} String dataPath
-+ {static} ArrayList<CustomerCart> parse()
-+ {static} void create(CartRepository)
 }
 class CartRepository {
 + <<Create>> CartRepository()
@@ -45,37 +59,56 @@ class CartService {
 + void addItem(String,Book)
 + void deleteItem(String,Book)
 }
-class Application {
+class CatalogFrontend {
 - {static} CatalogService catalogService
-- {static} CartService cartService
-- {static} Customer currentCustomer
-+ {static} void main(String[])
-- {static} void initCustomer(String)
-- {static} void mainChoiceMenu()
-- {static} void catalogChoiceMenu()
-- {static} void cartChoiceMenu()
-- {static} void addProductToCart()
-- {static} void getTotalPrice()
-- {static} void deleteProductFromCart()
-- {static} void showCartTable()
-- {static} void showCatalogTable()
-- {static} void generateBookTable(ArrayList<Book>)
++ {static} void show()
+- {static} void choiceMenu()
+- {static} void showMenu()
+- {static} void showTable()
 - {static} int getUserChoiceInput()
-- {static} void showMainMenu()
-- {static} void showCatalogMenu()
-- {static} void showCartMenu()
 }
+class CartFrontend {
+- {static} CartService cartService
+- {static} CatalogService catalogService
+- {static} Customer currentCustomer
++ {static} void show()
++ {static} void initCustomerCart(String)
++ {static} void addProductToCart()
++ {static} void deleteProductFromCart()
+- {static} void getTotalPrice()
+- {static} void choiceMenu()
+- {static} void showMenu()
+- {static} void showTable()
+- {static} int getUserChoiceInput()
+}
+class MainFrontend {
++ {static} void show()
+- {static} void showMenu()
+- {static} void choiceMenu()
+- {static} int getUserChoiceInput()
+}
+class Application {
++ {static} void main(String[])
+}
+
+CartFrontend *-- CatalogService
+CartFrontend *-- CartService
+CartFrontend *-- Customer
+
+CatalogFrontend *-- CatalogService
 
 Cart <|-- CartRepository
 Catalog <|-- CatalogRepository
 
-CatalogParser --* CatalogRepository
+JSONDataParser --* CatalogRepository
 CatalogService *-- CatalogRepository
 
-CartParser --* CartRepository
+JSONDataParser --* CartRepository
 CartService *-- CartRepository
 
-Application *-- CatalogService
-Application *-- CartService
-Application *-- Customer
+Application *-- Config
+Application *-- MainFrontend
+
+MainFrontend *-- CartFrontend
+MainFrontend *-- CatalogFrontend
 @enduml
