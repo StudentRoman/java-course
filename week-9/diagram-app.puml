@@ -25,32 +25,8 @@ class Config {
 - {static} Properties config
 + {static} void setConfig(String)
 }
-class JSONDataParser {
-- String dataPath
-- Class<T> model
-+ <<Create>> JSONDataParser(String,Class<T>)
-+ T parse()
-+ void create(K)
-}
-class CatalogRepository {
-+ <<Create>> CatalogRepository()
-+ ArrayList<Book> findAll()
-+ Book findById(int)
-}
-class CatalogService {
-- CatalogRepository catalogRepository
-+ ArrayList<Book> findAll()
-+ Book findById(int)
-}
-class CartRepository {
-+ <<Create>> CartRepository()
-+ ArrayList<CustomerCart> findAll()
-+ CustomerCart findByName(String)
-+ void insertOne(Customer)
-+ void updateOne(String,Book)
-+ void deleteOne(String,Book)
-}
-class CartService {
+
+class CartServiceImpl {
 - CartRepository cartRepository
 - boolean findBookInList(int,ArrayList<Book>)
 + ArrayList<CustomerCart> findAll()
@@ -59,8 +35,39 @@ class CartService {
 + void addItem(String,Book)
 + void deleteItem(String,Book)
 }
+class CartRepository {
+- {static} JSONDataParser<Cart> cartParser
++ <<Create>> CartRepository()
++ ArrayList<CustomerCart> findAll()
++ CustomerCart findByName(String)
++ void insertOne(Customer)
++ void updateOne(String,Book)
++ void deleteOne(String,Book)
+}
+interface CatalogService {
+~ ArrayList<Book> findAll()
++ Book findById(int)
+}
+interface CartService {
+~ ArrayList<CustomerCart> findAll()
+~ CustomerCart findByName(String)
+~ void createCart(Customer)
+~ void addItem(String,Book)
+~ void deleteItem(String,Book)
+}
+class CatalogRepository {
+- {static} JSONDataParser<Catalog> catalogParser
++ <<Create>> CatalogRepository()
++ ArrayList<Book> findAll()
++ Book findById(int)
+}
+class CatalogServiceImpl {
+- CatalogRepository catalogRepository
++ ArrayList<Book> findAll()
++ Book findById(int)
+}
 class CatalogFrontend {
-- {static} CatalogService catalogService
+- {static} CatalogServiceImpl catalogService
 + {static} void show()
 - {static} void choiceMenu()
 - {static} void showMenu()
@@ -68,8 +75,8 @@ class CatalogFrontend {
 - {static} int getUserChoiceInput()
 }
 class CartFrontend {
-- {static} CartService cartService
-- {static} CatalogService catalogService
+- {static} CartServiceImpl cartService
+- {static} CatalogServiceImpl catalogService
 - {static} Customer currentCustomer
 + {static} void show()
 + {static} void initCustomerCart(String)
@@ -90,21 +97,36 @@ class MainFrontend {
 class Application {
 + {static} void main(String[])
 }
+interface DataParser {
++ T parse()
++ void create(Object)
+}
+class JSONDataParser {
+- String dataPath
+- Class<T> model
++ <<Create>> JSONDataParser(String,Class<T>)
++ T parse()
++ void create(Object)
+}
 
-CartFrontend *-- CatalogService
-CartFrontend *-- CartService
+CartService <|.. CartServiceImpl
+DataParser <|.. JSONDataParser
+CatalogService <|.. CatalogServiceImpl
+
+CartFrontend *-- CatalogServiceImpl
+CartFrontend *-- CartServiceImpl
 CartFrontend *-- Customer
 
-CatalogFrontend *-- CatalogService
+CatalogFrontend *-- CatalogServiceImpl
 
 Cart <|-- CartRepository
 Catalog <|-- CatalogRepository
 
 JSONDataParser --* CatalogRepository
-CatalogService *-- CatalogRepository
+CatalogServiceImpl *-- CatalogRepository
 
 JSONDataParser --* CartRepository
-CartService *-- CartRepository
+CartServiceImpl *-- CartRepository
 
 Application *-- Config
 Application *-- MainFrontend

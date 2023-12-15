@@ -3,44 +3,18 @@ package edu.penzgtu.oop.services;
 import edu.penzgtu.oop.models.Book;
 import edu.penzgtu.oop.models.Customer;
 import edu.penzgtu.oop.models.CustomerCart;
-import edu.penzgtu.oop.repositories.CartRepository;
 
 import java.util.ArrayList;
 
-public class CartService {
-    private final CartRepository cartRepository = new CartRepository();
+public interface CartService {
 
-    private boolean findBookInList(int bookId, ArrayList<Book> books) {
-        return books != null && books
-                .stream()
-                .anyMatch(item -> item.getId() == bookId);
-    }
+    ArrayList<CustomerCart> findAll();
 
-    public ArrayList<CustomerCart> findAll() {
-        return cartRepository.findAll();
-    }
+    CustomerCart findByName(String customerName);
 
-    public CustomerCart findByName(String customerName) {
-        return cartRepository.findByName(customerName);
-    }
+    void createCart(Customer customer);
 
-    public void createCart(Customer customer) {
-        cartRepository.insertOne(customer);
-    }
+    void addItem(String customerName, Book book);
 
-    public void addItem(String customerName, Book book) {
-        CustomerCart cart = cartRepository.findByName(customerName);
-
-        boolean isCartExist = this.findBookInList(book.getId(), cart.getList());
-
-        if (!isCartExist) {
-            cartRepository.updateOne(customerName, book);
-        } else {
-            System.out.println("Товар уже в корзине");
-        }
-    }
-
-    public void deleteItem(String customerName, Book book) {
-        cartRepository.deleteOne(customerName, book);
-    }
+    void deleteItem(String customerName, Book book);
 }

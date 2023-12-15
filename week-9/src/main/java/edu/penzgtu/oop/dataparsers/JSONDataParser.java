@@ -7,15 +7,35 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class JSONDataParser<T> {
+/**
+ * Класс JSONDataParser является реализацией DataParser.
+ * Класс JSONDataParser представляет парсер для работы с данными в формате JSON.
+ * Он позволяет читать данные из файла JSON, создавать объекты на основе этих данных и сохранять данные в файл.
+ *
+ * @param <T> Тип объекта, с которым работает парсер.
+ */
+public class JSONDataParser<T> implements DataParser {
     private final String dataPath;
     private final Class<T> model;
 
+
+    /**
+     * Создает объект JSONDataParser для работы с данными в формате JSON.
+     *
+     * @param dataPath Путь к файлу JSON.
+     * @param model    Класс, с которым работает парсер.
+     */
     public JSONDataParser(String dataPath, Class<T> model) {
         this.dataPath = dataPath;
         this.model = model;
     }
 
+    /**
+     * Метод для получения данных из файла JSON.
+     *
+     * @return Объект, созданный на основе данных из файла JSON или null, если файл не найден.
+     */
+    @Override
     public T parse() {
         try (FileReader reader = new FileReader(this.dataPath)) {
             Gson gson = new Gson();
@@ -28,7 +48,14 @@ public class JSONDataParser<T> {
         return null;
     }
 
-    public <K> void create(K newData) {
+
+    /**
+     * Метод для добавления новых данных в файл JSON.
+     *
+     * @param newData Данные, которые необходимо добавить.
+     */
+    @Override
+    public void create(Object newData) {
         try (FileWriter writer = new FileWriter(this.dataPath)) {
             Gson gson = new GsonBuilder().create();
             gson.toJson(newData, writer);

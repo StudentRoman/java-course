@@ -5,8 +5,8 @@ import com.github.freva.asciitable.Column;
 import edu.penzgtu.oop.models.Book;
 import edu.penzgtu.oop.models.Customer;
 import edu.penzgtu.oop.models.CustomerCart;
-import edu.penzgtu.oop.services.CartService;
-import edu.penzgtu.oop.services.CatalogService;
+import edu.penzgtu.oop.services.CartServiceImpl;
+import edu.penzgtu.oop.services.CatalogServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,20 +15,44 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
-public class CartFrontend {
-    private static final CartService cartService = new CartService();
-    private static final CatalogService catalogService = new CatalogService();
 
+/**
+ * Графический интерфейс для корзины покупок.
+ * Класс CartFrontend обрабатывает отображение товаров в корзине покупок и управление ими.
+ * Он предоставляет методы для добавления, удаления и обновления товаров в корзине,
+ * а также методы для отображения содержимого каталога и расчета общей стоимости.
+ */
+public class CartFrontend {
+    /**
+     * Переменная которая предоставляет методы для управления элементами корзины.
+     */
+    private static final CartServiceImpl cartService = new CartServiceImpl();
+    /**
+     * Переменная которая предоставляет методы для управления элементами каталога.
+     */
+    private static final CatalogServiceImpl catalogService = new CatalogServiceImpl();
+
+    /**
+     * Инициализированный пользователь в системе.
+     */
     @Setter
     @Getter
     private static Customer currentCustomer;
 
+    /**
+     * Метод для начального отображения элементов.
+     */
     public static void show() {
         showTable();
         showMenu();
         choiceMenu();
     }
 
+    /**
+     * Метод для инициализации корзины клиента.
+     *
+     * @param username Имя клиента, чья корзина должна быть инициализирована.
+     */
     public static void initCustomerCart(String username) {
         CustomerCart currentCart = cartService.findByName(username);
 
@@ -45,6 +69,9 @@ public class CartFrontend {
         }
     }
 
+    /**
+     * Метод для добавления кинги в корзину пользователя.
+     */
     public static void addProductToCart() {
         System.out.println("Введите ID книги");
         int bookId = getUserChoiceInput();
@@ -53,6 +80,9 @@ public class CartFrontend {
         cartService.addItem(currentCustomer.getName(), book);
     }
 
+    /**
+     * Метод для удаления книги из корзины пользователя.
+     */
     public static void deleteProductFromCart() {
         System.out.println("Введите ID книги");
         int bookId = getUserChoiceInput();
@@ -61,6 +91,9 @@ public class CartFrontend {
         cartService.deleteItem(currentCustomer.getName(), book);
     }
 
+    /**
+     * Метод для получения общей стоймости книг в корзине пользователя.
+     */
     private static void getTotalPrice() {
         System.out.println("Общая цена");
         CustomerCart currentCart = cartService.findByName(currentCustomer.getName());
@@ -68,6 +101,9 @@ public class CartFrontend {
         System.out.println(currentCart.getTotalPrice());
     }
 
+    /**
+     * Метод для получения введенного пользователем номера меню.
+     */
     private static void choiceMenu() {
         int choice = getUserChoiceInput();
 
@@ -77,12 +113,18 @@ public class CartFrontend {
         }
     }
 
+    /**
+     * Метод для отображения меню с опциями для выбора пользователем.
+     */
     private static void showMenu() {
         System.out.println("[1] - Удалить книгу из корзины по ID");
         System.out.println("[2] - Общая стоймость");
         System.out.println("[0] - Вернуться в главное меню");
     }
 
+    /**
+     * Метод для отображения книг в корзине пользователя в табличном формате.
+     */
     private static void showTable() {
         ArrayList<Book> books = cartService.findByName(currentCustomer.getName()).getList();
 
@@ -103,6 +145,9 @@ public class CartFrontend {
         }
     }
 
+    /**
+     * Метод для получения пользовательского ввода.
+     */
     private static int getUserChoiceInput() {
         Scanner scanner = new Scanner(System.in);
 

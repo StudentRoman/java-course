@@ -3,21 +3,34 @@ package edu.penzgtu.oop.frontend;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import edu.penzgtu.oop.models.Book;
-import edu.penzgtu.oop.services.CatalogService;
+import edu.penzgtu.oop.services.CatalogServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Графический интерфейс для каталога книг.
+ * Позволяет пользователям просматривать товары и добавлять книги в корзину.
+ */
 public class CatalogFrontend {
-    private static final CatalogService catalogService = new CatalogService();
+    /**
+     * Переменная которая предоставляет методы для управления элементами каталога.
+     */
+    private static final CatalogServiceImpl catalogService = new CatalogServiceImpl();
 
+    /**
+     * Метод для начального отображения элементов.
+     */
     public static void show() {
         showTable();
         showMenu();
         choiceMenu();
     }
 
+    /**
+     * Метод для получения введенного пользователем номера меню.
+     */
     private static void choiceMenu() {
         int choice = getUserChoiceInput();
 
@@ -27,11 +40,17 @@ public class CatalogFrontend {
         }
     }
 
+    /**
+     * Метод для отображения меню с опциями для выбора пользователем.
+     */
     private static void showMenu() {
         System.out.println("[1] - Добавить книгу в корзину по ID");
         System.out.println("[0] - Вернуться в главное меню");
     }
-    
+
+    /**
+     * Метод для отображения книг в корзине пользователя в табличном формате.
+     */
     private static void showTable() {
         ArrayList<Book> books = catalogService.findAll();
 
@@ -48,6 +67,9 @@ public class CatalogFrontend {
         ));
     }
 
+    /**
+     * Метод для получения пользовательского ввода.
+     */
     private static int getUserChoiceInput() {
         Scanner scanner = new Scanner(System.in);
 
