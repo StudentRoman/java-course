@@ -5,7 +5,9 @@ import com.github.freva.asciitable.Column;
 import edu.penzgtu.oop.models.Book;
 import edu.penzgtu.oop.models.Customer;
 import edu.penzgtu.oop.models.CustomerCart;
+import edu.penzgtu.oop.services.CartService;
 import edu.penzgtu.oop.services.CartServiceImpl;
+import edu.penzgtu.oop.services.CatalogService;
 import edu.penzgtu.oop.services.CatalogServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +28,11 @@ public class CartFrontend {
     /**
      * Переменная которая предоставляет методы для управления элементами корзины.
      */
-    private static final CartServiceImpl cartService = new CartServiceImpl();
+    private static final CartService cartService = new CartServiceImpl();
     /**
      * Переменная которая предоставляет методы для управления элементами каталога.
      */
-    private static final CatalogServiceImpl catalogService = new CatalogServiceImpl();
+    private static final CatalogService catalogService = new CatalogServiceImpl();
 
     /**
      * Инициализированный пользователь в системе.

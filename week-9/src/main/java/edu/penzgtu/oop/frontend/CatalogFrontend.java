@@ -3,6 +3,7 @@ package edu.penzgtu.oop.frontend;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import edu.penzgtu.oop.models.Book;
+import edu.penzgtu.oop.services.CatalogService;
 import edu.penzgtu.oop.services.CatalogServiceImpl;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CatalogFrontend {
     /**
      * Переменная которая предоставляет методы для управления элементами каталога.
      */
-    private static final CatalogServiceImpl catalogService = new CatalogServiceImpl();
+    private static final CatalogService catalogService = new CatalogServiceImpl();
 
     /**
      * Метод для начального отображения элементов.

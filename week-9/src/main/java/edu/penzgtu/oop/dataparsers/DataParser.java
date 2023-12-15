@@ -4,5 +4,5 @@ public interface DataParser<T> {
 
     T parse();
 
-    void create(Object newData);
+    <K> void create(K newData);
 }

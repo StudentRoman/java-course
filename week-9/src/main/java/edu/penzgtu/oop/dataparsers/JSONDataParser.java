@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @param <T> Тип объекта, с которым работает парсер.
  */
-public class JSONDataParser<T> implements DataParser {
+public class JSONDataParser<T> implements DataParser<T> {
     private final String dataPath;
     private final Class<T> model;
 
@@ -53,9 +53,11 @@ public class JSONDataParser<T> implements DataParser {
      * Метод для добавления новых данных в файл JSON.
      *
      * @param newData Данные, которые необходимо добавить.
+     * @param <K>     Тип объекта для добавления.
      */
     @Override
-    public void create(Object newData) {
+
+    public <K> void create(K newData) {
         try (FileWriter writer = new FileWriter(this.dataPath)) {
             Gson gson = new GsonBuilder().create();
             gson.toJson(newData, writer);
